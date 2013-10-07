@@ -9,7 +9,7 @@
 
 
 (function($) {
-    $.fn.makeForms = function(params)
+    $.fn.makeforms = function(params)
     {
         var item, option, i, elt, htmlItems, finalHtmlItems,
                 totalSize, groupHtml, groupTemplate;

@@ -31,13 +31,25 @@ var questions = {
                     label: "No"
                 }
             }
-        },
+        }
+};
 
   $("#myForm").makeforms({
         components: questions
     });
 });
 </script>
+```
+
+Will generate :
+
+```html
+
+<form id="myForm">
+<p>Do you like donuts ?</p>
+<input type="radio" name="question_one" id="question_one_yes" value="yes">
+<input type="radio" name="question_one" id="question_one_no" value="no">
+</form>
 ```
 
 ## Documentation

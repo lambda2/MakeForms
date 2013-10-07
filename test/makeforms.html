@@ -17,6 +17,28 @@
   <script>window._$ = jQuery.noConflict(true);</script>-->
 </head>
 <body>
+    <script>
+jQuery(function($) {
+
+var questions = {
+        question_one: {
+            title: "Do you like donuts ?",
+            choices: {
+                yes: {
+                    label: "Yes"
+                },
+                no: {
+                    label: "No"
+                }
+            }
+        }
+    };
+
+  $("form").makeforms({
+        components: questions
+    });
+});
+</script>
   <div id="qunit"></div>
   <div id="qunit-fixture">
     <form id="qunit-form">
