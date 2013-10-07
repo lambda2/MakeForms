@@ -50,8 +50,28 @@ Will generate :
 ```
 
 ## Documentation
-_(Coming soon)_
 
+#Available options : 
+```javascript
+    {
+    components: {},
+    groupSize: 1,
+    selectMinSize: 18,
+    position: "before",
+    templates:
+    {
+        item: "{{item}}",
+        title: "<p>{{title}}</p>",
+        group: "{{group}}",
+        label: '<label for="{{id}}">{{label}}</label>',
+        radio: '<input type="radio" name="{{name}}" id="{{id}}" value="{{value}}">',
+        text: '<input type="text" name="{{name}}" id="{{id}}" value="{{value}}">',
+        input: '<input type="{{type}}" name="{{name}}" id="{{id}}" value="{{value}}">',
+        select: '<select id="{{id}}" name="{{name}}">{{options}}</select>',
+        option: '<option id="{{id}}" value="{{value}}">{{label}}</option>'
+    }
+}
+```
 ## Examples
 _(Coming soon)_
 
