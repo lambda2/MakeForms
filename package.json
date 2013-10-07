@@ -1,0 +1,31 @@
+{
+    "name": "makeForms",
+        "version": "0.0.1",
+        "description": "A jquery plugin to make forms",
+        "main": "jquery.makeforms.js",
+        "repository": {
+            "type": "git",
+            "url": "git://github.com/lambda2/MakeForms.git"
+        },
+        "keywords": [
+            "jquery",
+        "makeforms",
+        "forms"
+            ],
+        "author": "Anré Aubin",
+        "license": "Apache2",
+        "readmeFilename": "README.md",
+        "bugs": {
+            "url": "https://github.com/lambda2/MakeForms/issues"
+        },
+        "devDependencies": {
+            "grunt-contrib-clean": "~0.4.1",
+            "grunt-contrib-concat": "~0.3.0",
+            "grunt-contrib-uglify": "~0.2.2",
+            "grunt-cli": "~0.1.9",
+            "grunt": "~0.4.1",
+            "grunt-contrib-jasmine": "~0.5.1",
+            "grunt-contrib-sass": "~0.3.0",
+            "grunt-banner": "~0.1.4"
+        }
+}
