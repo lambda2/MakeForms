@@ -15,6 +15,7 @@ In your web page:
 ```html
 <!-- the form that will contain the form elements -->
 <form id="myForm">
+<button type="submit">Go!</button>
 </form>
 <script src="jquery.js"></script>
 <script src="dist/makeforms.min.js"></script>
@@ -46,6 +47,7 @@ Will generate :
 <p>Do you like donuts ?</p>
 <input type="radio" name="question_one" id="question_one_yes" value="yes">
 <input type="radio" name="question_one" id="question_one_no" value="no">
+<button type="submit">Go!</button>
 </form>
 ```
 
@@ -60,7 +62,7 @@ To generate the elements of a form, you must supply to the _components_ paramete
 
 `selectMinSize: 18 ` : the minimum size to generate a list (with <select> tag) instead of radio elements.
 
-`position: "before"`
+`position: "before"` : the position of the generated code in the target selector, can be `before`, `after` or `replace`
 
 ```
 templates:
