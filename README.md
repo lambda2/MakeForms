@@ -55,10 +55,15 @@ To generate the elements of a form, you must supply to the _components_ paramete
 
 ### Available options : 
 `components: {}` : the json object containing all the fields
+
 `groupSize: 1` :  the size of a group. set to 0 for no groups. The template of a group can be set by the template.group parameter.
+
 `selectMinSize: 18 ` : the minimum size to generate a list (with <select> tag) instead of radio elements.
+
 `position: "before"`
-`templates:
+
+```
+templates:
 {
     item: "{{item}}",
     title: "<p>{{title}}</p>",
@@ -69,7 +74,8 @@ To generate the elements of a form, you must supply to the _components_ paramete
     input: '<input type="{{type}}" name="{{name}}" id="{{id}}" value="{{value}}">',
     select: '<select id="{{id}}" name="{{name}}">{{options}}</select>',
     option: '<option id="{{id}}" value="{{value}}">{{label}}</option>'
-}` : See [templates] section.
+}
+``` : See [templates] section.
 
 ### JSON definition
 All the form elements are defined with a json object containin all the elements.
@@ -89,7 +95,7 @@ question
 ```
 
 for example :
-```
+```json
 {
     q1: {
         title: "Do you like donuts ?",
