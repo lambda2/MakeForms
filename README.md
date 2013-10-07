@@ -12,29 +12,25 @@ Download the [production version][min] or the [development version][max].
 In your web page:
 
 ```html
-<!-- the form which will countain the form elements -->
+<!-- the form that will contain the form elements -->
 <form id="myForm">
 </form>
 <script src="jquery.js"></script>
 <script src="dist/makeforms.min.js"></script>
 <script>
-jQuery(function($) {
-
-var questions = {
+jQuery(function($)
+{
+    var questions = {
         question_one: {
             title: "Do you like donuts ?",
             choices: {
-                yes: {
-                    label: "Yes"
-                },
-                no: {
-                    label: "No"
-                }
+                yes: {label: "Yes"},
+                no: {label: "No"}
             }
         }
-};
+    };
 
-  $("#myForm").makeforms({
+    $("#myForm").makeforms({
         components: questions
     });
 });
