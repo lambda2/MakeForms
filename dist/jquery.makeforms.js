@@ -1,13 +1,6 @@
-/*
- * makeforms
- *
- *
- * Copyright (c) 2013 André Aubin
- * Licensed under the Apache 2 license.
- */
-
-
-
+/*! makeforms - v0.0.1 - 2013-10-07
+* https://github.com/lambda2/MakeForms
+* Copyright (c) 2013 André Aubin; Licensed Apache 2 */
 (function($) {
     $.fn.makeForms = function(params)
     {

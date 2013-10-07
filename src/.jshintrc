@@ -8,6 +8,7 @@
   "sub": true,
   "undef": true,
   "unused": true,
+"multistr": true,
   "boss": true,
   "eqnull": true,
   "browser": true,
