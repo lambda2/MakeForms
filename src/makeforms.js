@@ -17,7 +17,7 @@
         params = $.extend(
                 {
                     components: {},
-                    groupSize: 4,
+                    groupSize: 1,
                     selectMinSize: 18,
                     templates: {}
                 }, params);
