@@ -15,7 +15,7 @@ In your web page:
 ```html
 <!-- the form that will contain the form elements -->
 <form id="myForm">
-<button type="submit">Go!</button>
+    <button type="submit">Go!</button>
 </form>
 <script src="jquery.js"></script>
 <script src="dist/makeforms.min.js"></script>
@@ -44,10 +44,10 @@ Will generate :
 ```html
 
 <form id="myForm">
-<p>Do you like donuts ?</p>
-<input type="radio" name="question_one" id="question_one_yes" value="yes">
-<input type="radio" name="question_one" id="question_one_no" value="no">
-<button type="submit">Go!</button>
+    <p>Do you like donuts ?</p>
+    <input type="radio" name="question_one" id="question_one_yes" value="yes">
+    <input type="radio" name="question_one" id="question_one_no" value="no">
+    <button type="submit">Go!</button>
 </form>
 ```
 
@@ -97,8 +97,8 @@ question
         └...                // Add other choices
 ```
 
-for example :
-```json
+For example :
+```javascript
 {
     q1: {
         title: "Do you like donuts ?",
