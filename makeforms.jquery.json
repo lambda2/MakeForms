@@ -1,6 +1,7 @@
 {
   "name": "makeforms",
   "version": "0.0.3",
+  "title": "Make forms",
   "description": "A simple jquery plugin to make forms faster",
   "keywords": [
     "jquery-plugin",
@@ -21,7 +22,8 @@
   },
   "licenses": [
     {
-      "type": "Apache 2"
+      "type": "Apache 2",
+      "url": "https://github.com/lambda2/MakeForms/blob/master/LICENSE"
     }
   ],
   "devDependencies": {
