@@ -51,29 +51,72 @@ Will generate :
 
 ## Documentation
 
-#Available options : 
-```javascript
-    {
-    components: {},
-    groupSize: 1,
-    selectMinSize: 18,
-    position: "before",
-    templates:
-    {
-        item: "{{item}}",
-        title: "<p>{{title}}</p>",
-        group: "{{group}}",
-        label: '<label for="{{id}}">{{label}}</label>',
-        radio: '<input type="radio" name="{{name}}" id="{{id}}" value="{{value}}">',
-        text: '<input type="text" name="{{name}}" id="{{id}}" value="{{value}}">',
-        input: '<input type="{{type}}" name="{{name}}" id="{{id}}" value="{{value}}">',
-        select: '<select id="{{id}}" name="{{name}}">{{options}}</select>',
-        option: '<option id="{{id}}" value="{{value}}">{{label}}</option>'
+To generate the elements of a form, you must supply to the _components_ parameter a json object containing the definition of all the form fields.
+
+### Available options : 
+`components: {}` : the json object containing all the fields
+`groupSize: 1` :  the size of a group. set to 0 for no groups. The template of a group can be set by the template.group parameter.
+`selectMinSize: 18 ` : the minimum size to generate a list (with <select> tag) instead of radio elements.
+`position: "before"`
+`templates:
+{
+    item: "{{item}}",
+    title: "<p>{{title}}</p>",
+    group: "{{group}}",
+    label: '<label for="{{id}}">{{label}}</label>',
+    radio: '<input type="radio" name="{{name}}" id="{{id}}" value="{{value}}">',
+    text: '<input type="text" name="{{name}}" id="{{id}}" value="{{value}}">',
+    input: '<input type="{{type}}" name="{{name}}" id="{{id}}" value="{{value}}">',
+    select: '<select id="{{id}}" name="{{name}}">{{options}}</select>',
+    option: '<option id="{{id}}" value="{{value}}">{{label}}</option>'
+}` : See [templates] section.
+
+### JSON definition
+All the form elements are defined with a json object containin all the elements.
+there is the structure of each question:
+```
+question
+    ├── title               // the title of the question
+    └── choices             // contain all the choices for the current question
+        ├── name            // the name of the form element
+        │   ├── label       // the label of the current choice
+        │   ├── value       // the value of the current choice
+        │   ├── type = auto // the type (ex : 'text', 'radio', 'select'...)
+        │   ├── before = "" // some text to insert before the html code
+        │   └── after = ""  // some text to insert after the html code
+        │
+        └...                // Add other choices
+```
+
+for example :
+```
+{
+    q1: {
+        title: "Do you like donuts ?",
+        choices: {
+            yes: {
+                label: "Yes"
+            },
+            no: {
+                label: "No"
+            }
+        }
+    },
+    q2: {
+        title: "And what is your favorite color ?",
+        choices: {
+            blue: { label: "blue" },
+            red: { label: "red" },
+            other: {
+                label: "other :",
+                value: "",
+                type: "text"
+            }
+        }
     }
 }
 ```
-## Examples
-_(Coming soon)_
 
-## Release History
-_(Nothing yet)_
+### Templates
+You can change the default template for all generated fields via the "template" parameter.
+The variables are defined with "Mustache" notation, like `<p>{{ my_var }}</p>`.
