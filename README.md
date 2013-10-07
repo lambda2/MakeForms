@@ -75,7 +75,8 @@ templates:
     select: '<select id="{{id}}" name="{{name}}">{{options}}</select>',
     option: '<option id="{{id}}" value="{{value}}">{{label}}</option>'
 }
-``` : See [templates] section.
+```
+See [templates] section.
 
 ### JSON definition
 All the form elements are defined with a json object containin all the elements.
