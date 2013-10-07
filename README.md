@@ -4,6 +4,7 @@ A simple jquery plugin to make forms faster
 
 ## Getting Started
 
+This plugin requires jQuery 1.7 or higher.
 Download the [production version][min] or the [development version][max].
 
 [min]: https://raw.github.com/lambda2/MakeForms/master/dist/jquery.makeforms.min.js

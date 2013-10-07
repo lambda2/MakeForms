@@ -19,6 +19,7 @@
                     components: {},
                     groupSize: 1,
                     selectMinSize: 18,
+                    position: "before",
                     templates: {}
                 }, params);
 
@@ -250,8 +251,18 @@
             );
             finalHtmlItems.push(groupHtml);
         }
-        elt.html(finalHtmlItems.join('\n'));
-
+        if (params.position === "before")
+        {
+            elt.html(finalHtmlItems.join('\n') + elt.html());
+        }
+        else if (params.position === "after")
+        {
+            elt.html(elt.html() + finalHtmlItems.join('\n'));
+        }
+        else
+        {
+            elt.html(finalHtmlItems.join('\n'));
+        }
         return (this);
     };
 })(jQuery);
