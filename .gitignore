@@ -1,4 +1,8 @@
 /node_modules/
 node_modules/
-nbproject/
+/nbproject/
+/bower_components/
 bower_components/
+nbproject/
+bower_components/*
+nbproject/*
