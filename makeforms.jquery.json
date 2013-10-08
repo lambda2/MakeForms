@@ -5,11 +5,14 @@
   "description": "A simple jquery plugin to make forms faster",
   "keywords": [
     "jquery-plugin",
-    "forms",
+    "form elements",
+    "form",
+    "survey",
     "generator",
     "json"
   ],
   "homepage": "https://github.com/lambda2/MakeForms",
+  "docs": "https://github.com/lambda2/MakeForms",
   "bugs": "https://github.com/lambda2/MakeForms/issues",
   "author": {
     "name": "André Aubin",
