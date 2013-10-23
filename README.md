@@ -85,7 +85,9 @@ All the form elements are defined with a json object containin all the elements.
 there is the structure of each question:
 ```
 question
+    ├── beforeTitle         // a raw content to insert before title template
     ├── title               // the title of the question
+    ├── afterTitle          // a raw content to insert after title template
     └── choices             // contain all the choices for the current question
         ├── name            // the name of the form element
         │   ├── label       // the label of the current choice
@@ -101,6 +103,7 @@ For example :
 ```javascript
 {
     q1: {
+        beforeTitle: "<h1>Let's start !</h1>",
         title: "Do you like donuts ?",
         choices: {
             yes: {
