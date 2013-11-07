@@ -133,7 +133,7 @@
 					/**
 					 * First, we will set the text of the label.
 					 */
-					itemId = eltName + "_" + option;
+					itemId = eltName + "_" + eltSection + "_" + option;
 					labelTemplate = params.templates.label;
 					if (eltType !== "option" && eltType !== "radio")
 					{
