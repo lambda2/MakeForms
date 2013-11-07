@@ -6,12 +6,10 @@
  * Licensed under the Apache 2 license.
  */
 
-
-
 (function($) {
 	$.fn.makeForms = function(params)
 	{
-		var item, option, i, elt, htmlItems, finalHtmlItems,
+		var item, i, elt, htmlItems, finalHtmlItems,
 			totalSize, groupHtml, groupTemplate;
 
 		params = $.extend(
@@ -28,9 +26,10 @@
 				item: "{{item}}",
 				title: "<p>{{title}}</p>",
 				group: "{{group}}",
+				item_group: "<div class='item-group'>{{items}}</div>",
 				label: '<label for="{{id}}">{{label}}</label>',
-				radio: '<input type="radio" name="{{name}}"\
-                id="{{id}}" value="{{value}}">',
+				radio: '<label for="{{id}}"><input type="radio" name="{{name}}"\
+	id="{{id}}" value="{{value}}">{{label}}</label>',
 				text: '<input type="text" name="{{name}}"\
 	id="{{id}}" value="{{value}}">',
 				input: '<input type="{{type}}" name="{{name}}"\
@@ -108,8 +107,154 @@
 					type = "option";
 				}
 			}
-
 			return (type);
+		};
+
+		var groupLoop = function(list, eltName, eltType, eltSection)
+		{
+			var lhtml = "", option;
+
+			for (option in list)
+			{
+				var obj, itemId, labelTemplate, labelHtml, currentHtml, nt;
+
+				if (option !== "group")
+				{
+					obj = list[option];
+
+					if (obj.hasOwnProperty("type"))
+					{
+						nt = params.templates[obj.type];
+					}
+					else
+					{
+						nt = currentTemplate;
+					}
+					/**
+					 * First, we will set the text of the label.
+					 */
+					itemId = eltName + "_" + option;
+					labelTemplate = params.templates.label;
+					if (eltType !== "option" && eltType !== "radio")
+					{
+						labelHtml = applyTemplate(
+							labelTemplate,
+							{
+								label: obj.label,
+								id: itemId
+							}
+						);
+					}
+					else
+					{
+						labelHtml = "";
+					}
+					if (!obj.hasOwnProperty("value"))
+					{
+						obj.value = eltSection + "_" + option;
+					}
+
+					currentHtml = applyTemplate(
+						nt,
+						{
+							name: eltName,
+							id: itemId,
+							value: obj.value,
+							label: obj.label
+						});
+
+					if (obj.hasOwnProperty("before"))
+					{
+						currentHtml = obj["before"] + currentHtml;
+					}
+					if (obj.hasOwnProperty("after"))
+					{
+						currentHtml = currentHtml + obj["after"];
+					}
+
+					lhtml = lhtml + labelHtml + currentHtml;
+				}
+			}
+			return lhtml;
+		};
+
+		var eltLoop = function(list, eltName, eltLabel, eltType)
+		{
+			var isGroup = false, option;
+			for (option in list)
+			{
+				var obj, itemId, labelTemplate, labelHtml, currentHtml, nt;
+
+				obj = list[option];
+
+				isGroup = obj.group;
+				if (isGroup !== true)
+				{
+					if (obj.hasOwnProperty("type"))
+					{
+						nt = params.templates[obj.type];
+					}
+					else
+					{
+						nt = currentTemplate;
+					}
+					/**
+					 * First, we will set the text of the label.
+					 */
+					itemId = eltName + "_" + option;
+					labelTemplate = params.templates.label;
+					if (eltType !== "option" && eltType !== "radio")
+					{
+						labelHtml = applyTemplate(
+							labelTemplate,
+							{
+								label: obj.label,
+								id: itemId
+							}
+						);
+					}
+					else
+					{
+						labelHtml = "";
+					}
+					if (!obj.hasOwnProperty("value"))
+					{
+						obj.value = option;
+					}
+
+					currentHtml = applyTemplate(
+						nt,
+						{
+							name: eltName,
+							id: itemId,
+							value: obj.value,
+							label: obj.label
+						});
+
+					if (obj.hasOwnProperty("before"))
+					{
+						currentHtml = obj["before"] + currentHtml;
+					}
+					if (obj.hasOwnProperty("after"))
+					{
+						currentHtml = currentHtml + obj["after"];
+					}
+
+					html = html + labelHtml + currentHtml;
+				}
+				else if (isGroup === true)
+				{
+					var innerHtml = "";
+					var ghtml = groupLoop(obj, eltName, eltType, option);
+					innerHtml = innerHtml + ghtml;
+
+					html = html + applyTemplate(
+						params.templates.item_group,
+						{items: innerHtml}
+					);
+				}
+			}
+			return html;
 		};
 
 		/**
@@ -155,7 +300,7 @@
 						title: params.components[item].title
 					}
 				);
-			
+
 				if (params.components[item].hasOwnProperty("afterTitle"))
 				{
 					titleHtml += params.components[item].afterTitle;
@@ -164,63 +309,7 @@
 			}
 
 			i = i + 1;
-			for (option in params.components[item].choices)
-			{
-				var obj, itemId, labelTemplate, labelHtml, currentHtml, nt;
-
-				obj = params.components[item].choices[option];
-
-				if (obj.hasOwnProperty("type"))
-				{
-					nt = params.templates[obj.type];
-				}
-				else
-				{
-					nt = currentTemplate;
-				}
-				/**
-				 * First, we will set the text of the label.
-				 */
-				itemId = eltName + "_" + option;
-				labelTemplate = params.templates.label;
-				if (eltType !== "option" && eltType !== "radio")
-				{
-					labelHtml = applyTemplate(
-						labelTemplate,
-						{
-							label: obj.label,
-							id: itemId
-						}
-					);
-				}
-				else
-				{
-					labelHtml = "";
-				}
-				if (!obj.hasOwnProperty("value"))
-				{
-					obj.value = option;
-				}
-				currentHtml = applyTemplate(
-					nt,
-					{
-						name: eltName,
-						id: itemId,
-						value: obj.value,
-						label: obj.label
-					});
-
-				if (obj.hasOwnProperty("before"))
-				{
-					currentHtml = obj["before"] + currentHtml;
-				}
-				if (obj.hasOwnProperty("after"))
-				{
-					currentHtml = currentHtml + obj["after"];
-				}
-
-				html = html + labelHtml + currentHtml;
-			}
+			eltLoop(params.components[item].choices, eltName, eltLabel, eltType);
 			if (eltType === "option")
 			{
 				html = applyTemplate(
