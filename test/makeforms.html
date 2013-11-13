@@ -7,10 +7,10 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <!-- Load local QUnit. -->
         <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" media="screen">
-        <script src="../bower_components/qunit/qunit/qunit.js"></script>
+        <!--<script src="../bower_components/qunit/qunit/qunit.js"></script>
         <!-- Load local lib and tests. -->
         <script src="../src/makeforms.js"></script>
-        <script src="makeforms_test.js"></script>
+       <!-- <script src="makeforms_test.js"></script>
         <!-- Removing access to jQuery and $. But it'll still be available as _$, if
              you REALLY want to mess around with jQuery in the console. REMEMBER WE
              ARE TESTING A PLUGIN HERE, THIS HELPS ENSURE BEST PRACTICES. REALLY. 
@@ -22,13 +22,26 @@
 
                 var questions = {
                     question_one: {
+                        beforeTitle: "And you...",
                         title: "Do you like donuts ?",
                         choices: {
                             yes: {
+                                enable: ["question_one_precise"],
                                 label: "Yes"
                             },
                             no: {
                                 label: "No"
+                            }
+                        }
+                    },
+                    question_one_precise: {
+                        title: "And wich kind of donuts ?",
+                        choices: {
+                            chocolate: {
+                                label: "Chocolate"
+                            },
+                            vanilla: {
+                                label: "Vanilla"
                             }
                         }
                     },

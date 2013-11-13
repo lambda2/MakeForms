@@ -10,7 +10,8 @@
 	$.fn.makeForms = function(params)
 	{
 		var item, i, elt, htmlItems, finalHtmlItems,
-			totalSize, groupHtml, groupTemplate;
+			totalSize, groupHtml, groupTemplate,
+			enableList = {}, disableList = {};
 
 		params = $.extend(
 			{
@@ -25,7 +26,7 @@
 			{
 				item: "{{item}}",
 				title: "<p>{{title}}</p>",
-				group: "{{group}}",
+				group: "<div data-role='group'>{{group}}</div>",
 				item_group: "<div class='item-group'>{{items}}</div>",
 				label: '<label for="{{id}}">{{label}}</label>',
 				radio: '<label for="{{id}}"><input type="radio" name="{{name}}"\
@@ -178,14 +179,36 @@
 			return lhtml;
 		};
 
+		var getItemsList = function(enableList, enableId)
+		{
+			var mitem;
+			var tempList = [];
+				console.log("enableList == ", enableList);
+				console.log("enableId == ", enableId);
+			for (mitem in enableList[enableId])
+			{
+				var val = enableList[enableId][mitem].slice(1);
+				console.log("mitem == ", val);
+				for (item in params.components[val].choices)
+				{
+					tempList.push("#" + val + "_" + item);
+				}
+				$(tempList.join(', ')).show();
+			}
+			return tempList;
+		};
+
 		var eltLoop = function(list, eltName, eltLabel, eltType)
 		{
 			var isGroup = false, option;
 			for (option in list)
 			{
+				console.log("On est est à :", option);
 				var obj, itemId, labelTemplate, labelHtml, currentHtml, nt;
 
 				obj = list[option];
+
+
 
 				isGroup = obj.group;
 				if (isGroup !== true)
@@ -217,6 +240,37 @@
 					{
 						labelHtml = "";
 					}
+
+					/* Enable triggers */
+					if (obj.hasOwnProperty("enable"))
+					{
+						if (itemId in enableList === false)
+						{
+							enableList["#" + itemId] = [];
+						}
+
+						var counter = 0;
+						for (counter = 0; counter < obj.enable.length; counter++)
+						{
+							enableList["#" + itemId].push("#" + obj.enable[counter] + "");
+						}
+						console.log(enableList);
+					}
+					if (obj.hasOwnProperty("disable"))
+					{
+						if (itemId in disableList === false)
+						{
+							disableList["#" + itemId] = [];
+						}
+
+						var counter = 0;
+						for (counter = 0; counter < obj.disable.length; counter++)
+						{
+							disableList["#" + itemId].push("#" + obj.disable[counter]);
+						}
+						console.log(disableList);
+					}
+
 					if (!obj.hasOwnProperty("value"))
 					{
 						obj.value = option;
@@ -361,6 +415,19 @@
 		else
 		{
 			elt.html(finalHtmlItems.join('\n'));
+		}
+
+		var enableId;
+		for (enableId in enableList)
+		{
+			console.log("hiding [" + enableList[enableId].join(', ') + "]");
+			var list = getItemsList(enableList, enableId);
+			$(list.join(', ')).hide();
+			$(enableId).click(function()
+			{
+				console.log("click");
+				$(list.join(', ')).show();
+			});
 		}
 		return (this);
 	};
