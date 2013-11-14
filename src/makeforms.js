@@ -150,6 +150,10 @@
 					{
 						labelHtml = "";
 					}
+					
+					/* Enable triggers */
+					enableTriggers(obj, itemId, true);
+					
 					if (!obj.hasOwnProperty("value"))
 					{
 						obj.value = eltSection + "_" + option;
@@ -197,6 +201,39 @@
 			}
 			return tempList;
 		};
+		
+		var enableTriggers = function(obj, itemId, inGroup)
+		{
+			/* Enable triggers */
+					if (obj.hasOwnProperty("enable"))
+					{
+						if (itemId in enableList === false)
+						{
+							enableList["#" + itemId] = [];
+						}
+
+						var counter = 0;
+						for (counter = 0; counter < obj.enable.length; counter++)
+						{
+							enableList["#" + itemId].push("#" + obj.enable[counter] + "");
+						}
+						console.log(enableList);
+					}
+					if (obj.hasOwnProperty("disable"))
+					{
+						if (itemId in disableList === false)
+						{
+							disableList["#" + itemId] = [];
+						}
+
+						var counter = 0;
+						for (counter = 0; counter < obj.disable.length; counter++)
+						{
+							disableList["#" + itemId].push("#" + obj.disable[counter]);
+						}
+						console.log(disableList);
+					}
+		}
 
 		var eltLoop = function(list, eltName, eltLabel, eltType)
 		{
@@ -242,34 +279,7 @@
 					}
 
 					/* Enable triggers */
-					if (obj.hasOwnProperty("enable"))
-					{
-						if (itemId in enableList === false)
-						{
-							enableList["#" + itemId] = [];
-						}
-
-						var counter = 0;
-						for (counter = 0; counter < obj.enable.length; counter++)
-						{
-							enableList["#" + itemId].push("#" + obj.enable[counter] + "");
-						}
-						console.log(enableList);
-					}
-					if (obj.hasOwnProperty("disable"))
-					{
-						if (itemId in disableList === false)
-						{
-							disableList["#" + itemId] = [];
-						}
-
-						var counter = 0;
-						for (counter = 0; counter < obj.disable.length; counter++)
-						{
-							disableList["#" + itemId].push("#" + obj.disable[counter]);
-						}
-						console.log(disableList);
-					}
+					enableTriggers(obj, itemId, false);
 
 					if (!obj.hasOwnProperty("value"))
 					{
@@ -306,6 +316,8 @@
 						params.templates.item_group,
 						{items: innerHtml}
 					);
+				var idName = eltName + "_" + option + "_all";
+					enableTriggers(obj, idName, true);
 				}
 			}
 			return html;
@@ -417,16 +429,26 @@
 			elt.html(finalHtmlItems.join('\n'));
 		}
 
-		var enableId;
+		var enableId, disableId;
 		for (enableId in enableList)
 		{
 			console.log("hiding [" + enableList[enableId].join(', ') + "]");
 			var list = getItemsList(enableList, enableId);
-			$(list.join(', ')).hide();
+			$(list.join(', ')).parents("div[data-role='group']").hide();
 			$(enableId).click(function()
 			{
 				console.log("click");
-				$(list.join(', ')).show();
+				$(list.join(', ')).parents("div[data-role='group']").show();
+			});
+		}
+		for (disableId in disableList)
+		{
+			console.log("hiding [" + disableList[disableId].join(', ') + "]");
+			var list = getItemsList(disableList, disableId);
+			$(disableId).click(function()
+			{
+				console.log("click: disabling ",$(list.join(', ')), list);
+				$(list.join(', ')).parents("div[data-role='group']").hide();
 			});
 		}
 		return (this);
