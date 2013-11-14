@@ -151,9 +151,6 @@
 						labelHtml = "";
 					}
 					
-					/* Enable triggers */
-					enableTriggers(obj, itemId, true);
-					
 					if (!obj.hasOwnProperty("value"))
 					{
 						obj.value = eltSection + "_" + option;
@@ -185,14 +182,11 @@
 
 		var getItemsList = function(enableList, enableId)
 		{
-			var mitem;
+			var mitem, item;
 			var tempList = [];
-				console.log("enableList == ", enableList);
-				console.log("enableId == ", enableId);
 			for (mitem in enableList[enableId])
 			{
 				var val = enableList[enableId][mitem].slice(1);
-				console.log("mitem == ", val);
 				for (item in params.components[val].choices)
 				{
 					tempList.push("#" + val + "_" + item);
@@ -202,8 +196,9 @@
 			return tempList;
 		};
 		
-		var enableTriggers = function(obj, itemId, inGroup)
+		var enableTriggers = function(obj, itemId)
 		{
+						var counter = 0;
 			/* Enable triggers */
 					if (obj.hasOwnProperty("enable"))
 					{
@@ -211,13 +206,10 @@
 						{
 							enableList["#" + itemId] = [];
 						}
-
-						var counter = 0;
 						for (counter = 0; counter < obj.enable.length; counter++)
 						{
 							enableList["#" + itemId].push("#" + obj.enable[counter] + "");
 						}
-						console.log(enableList);
 					}
 					if (obj.hasOwnProperty("disable"))
 					{
@@ -225,22 +217,18 @@
 						{
 							disableList["#" + itemId] = [];
 						}
-
-						var counter = 0;
 						for (counter = 0; counter < obj.disable.length; counter++)
 						{
 							disableList["#" + itemId].push("#" + obj.disable[counter]);
 						}
-						console.log(disableList);
 					}
-		}
+		};
 
 		var eltLoop = function(list, eltName, eltLabel, eltType)
 		{
 			var isGroup = false, option;
 			for (option in list)
 			{
-				console.log("On est est à :", option);
 				var obj, itemId, labelTemplate, labelHtml, currentHtml, nt;
 
 				obj = list[option];
@@ -279,7 +267,7 @@
 					}
 
 					/* Enable triggers */
-					enableTriggers(obj, itemId, false);
+					enableTriggers(obj, itemId);
 
 					if (!obj.hasOwnProperty("value"))
 					{
@@ -317,7 +305,7 @@
 						{items: innerHtml}
 					);
 				var idName = eltName + "_" + option + "_all";
-					enableTriggers(obj, idName, true);
+					enableTriggers(obj, idName);
 				}
 			}
 			return html;
@@ -429,25 +417,21 @@
 			elt.html(finalHtmlItems.join('\n'));
 		}
 
-		var enableId, disableId;
+		var enableId, disableId, list;
 		for (enableId in enableList)
 		{
-			console.log("hiding [" + enableList[enableId].join(', ') + "]");
-			var list = getItemsList(enableList, enableId);
+			list = getItemsList(enableList, enableId);
 			$(list.join(', ')).parents("div[data-role='group']").hide();
 			$(enableId).click(function()
 			{
-				console.log("click");
 				$(list.join(', ')).parents("div[data-role='group']").show();
 			});
 		}
 		for (disableId in disableList)
 		{
-			console.log("hiding [" + disableList[disableId].join(', ') + "]");
-			var list = getItemsList(disableList, disableId);
+			list = getItemsList(disableList, disableId);
 			$(disableId).click(function()
 			{
-				console.log("click: disabling ",$(list.join(', ')), list);
 				$(list.join(', ')).parents("div[data-role='group']").hide();
 			});
 		}

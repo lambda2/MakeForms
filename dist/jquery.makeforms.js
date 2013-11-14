@@ -1,11 +1,12 @@
-/*! makeforms - v0.0.3 - 2013-11-07
+/*! makeforms - v0.0.3 - 2013-11-14
 * https://github.com/lambda2/MakeForms
 * Copyright (c) 2013 André Aubin; Licensed Apache 2 */
 (function($) {
 	$.fn.makeForms = function(params)
 	{
 		var item, i, elt, htmlItems, finalHtmlItems,
-			totalSize, groupHtml, groupTemplate;
+			totalSize, groupHtml, groupTemplate,
+			enableList = {}, disableList = {};
 
 		params = $.extend(
 			{
@@ -20,7 +21,7 @@
 			{
 				item: "{{item}}",
 				title: "<p>{{title}}</p>",
-				group: "{{group}}",
+				group: "<div data-role='group'>{{group}}</div>",
 				item_group: "<div class='item-group'>{{items}}</div>",
 				label: '<label for="{{id}}">{{label}}</label>',
 				radio: '<label for="{{id}}"><input type="radio" name="{{name}}"\
@@ -144,6 +145,7 @@
 					{
 						labelHtml = "";
 					}
+					
 					if (!obj.hasOwnProperty("value"))
 					{
 						obj.value = eltSection + "_" + option;
@@ -173,6 +175,50 @@
 			return lhtml;
 		};
 
+		var getItemsList = function(enableList, enableId)
+		{
+			var mitem, item;
+			var tempList = [];
+			for (mitem in enableList[enableId])
+			{
+				var val = enableList[enableId][mitem].slice(1);
+				for (item in params.components[val].choices)
+				{
+					tempList.push("#" + val + "_" + item);
+				}
+				$(tempList.join(', ')).show();
+			}
+			return tempList;
+		};
+		
+		var enableTriggers = function(obj, itemId)
+		{
+						var counter = 0;
+			/* Enable triggers */
+					if (obj.hasOwnProperty("enable"))
+					{
+						if (itemId in enableList === false)
+						{
+							enableList["#" + itemId] = [];
+						}
+						for (counter = 0; counter < obj.enable.length; counter++)
+						{
+							enableList["#" + itemId].push("#" + obj.enable[counter] + "");
+						}
+					}
+					if (obj.hasOwnProperty("disable"))
+					{
+						if (itemId in disableList === false)
+						{
+							disableList["#" + itemId] = [];
+						}
+						for (counter = 0; counter < obj.disable.length; counter++)
+						{
+							disableList["#" + itemId].push("#" + obj.disable[counter]);
+						}
+					}
+		};
+
 		var eltLoop = function(list, eltName, eltLabel, eltType)
 		{
 			var isGroup = false, option;
@@ -181,6 +227,8 @@
 				var obj, itemId, labelTemplate, labelHtml, currentHtml, nt;
 
 				obj = list[option];
+
+
 
 				isGroup = obj.group;
 				if (isGroup !== true)
@@ -212,6 +260,10 @@
 					{
 						labelHtml = "";
 					}
+
+					/* Enable triggers */
+					enableTriggers(obj, itemId);
+
 					if (!obj.hasOwnProperty("value"))
 					{
 						obj.value = option;
@@ -247,6 +299,8 @@
 						params.templates.item_group,
 						{items: innerHtml}
 					);
+				var idName = eltName + "_" + option + "_all";
+					enableTriggers(obj, idName);
 				}
 			}
 			return html;
@@ -356,6 +410,25 @@
 		else
 		{
 			elt.html(finalHtmlItems.join('\n'));
+		}
+
+		var enableId, disableId, list;
+		for (enableId in enableList)
+		{
+			list = getItemsList(enableList, enableId);
+			$(list.join(', ')).parents("div[data-role='group']").hide();
+			$(enableId).click(function()
+			{
+				$(list.join(', ')).parents("div[data-role='group']").show();
+			});
+		}
+		for (disableId in disableList)
+		{
+			list = getItemsList(disableList, disableId);
+			$(disableId).click(function()
+			{
+				$(list.join(', ')).parents("div[data-role='group']").hide();
+			});
 		}
 		return (this);
 	};
