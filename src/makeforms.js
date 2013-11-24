@@ -19,6 +19,7 @@
 				groupSize: 1,
 				selectMinSize: 18,
 				position: "before",
+				callback: null,
 				templates: {}
 			}, params);
 
@@ -434,6 +435,11 @@
 			{
 				$(list.join(', ')).parents("div[data-role='group']").hide();
 			});
+		}
+		
+		if ( params.callback != null )
+		{
+			params.callback();
 		}
 		return (this);
 	};
