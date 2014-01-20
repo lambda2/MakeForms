@@ -1,4 +1,4 @@
-# Make Forms
+# MakeForms
 
 A simple jquery plugin to make forms faster
 
