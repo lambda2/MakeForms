@@ -60,9 +60,10 @@ To generate the elements of a form, you must supply to the _components_ paramete
 
 `groupSize: 1` :  the size of a group. set to 0 for no groups. The template of a group can be set by the template.group parameter.
 
-`selectMinSize: 18 ` : the minimum size to generate a list (with <select> tag) instead of radio elements.
+`selectMinSize: 18` : the minimum size to generate a list (with `<select>` tag) instead of radio elements.
 
 `position: "before"` : the position of the generated code in the target selector, can be `before`, `after` or `replace`
+
 
 ```
 templates:
